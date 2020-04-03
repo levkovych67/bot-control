@@ -46,15 +46,14 @@ public class AnimeBot extends TelegramLongPollingBot {
         try {
             execute(sendVideo);
         } catch (TelegramApiException e) {
-            System.out.println("Could not send video ");
+            System.out.println("Could not send video " + e.toString());
         }
     }
 
     private void sendPic(String link) {
         try {
             execute(new SendPhoto().setChatId(channelId).setPhoto(link));
-        } catch (TelegramApiException e) {
-            System.out.println("Could not send video " + link + " " + e.getMessage());
+        } catch (TelegramApiException ignored) {
         }
     }
 

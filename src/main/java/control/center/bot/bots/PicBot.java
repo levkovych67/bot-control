@@ -57,7 +57,7 @@ public class PicBot extends TelegramLongPollingBot {
                     .setPhoto(link)
                     .setReplyMarkup(menu));
         } catch (TelegramApiException e) {
-            System.out.println("Could not send video " + link + " " + e.getMessage());
+            System.out.println("Could not send video " + e.toString());
         }
     }
 }
