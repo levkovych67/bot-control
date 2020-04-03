@@ -65,7 +65,7 @@ public class VideoBot extends TelegramLongPollingBot {
         try {
             execute(sendVideo.setChatId(chatId).setReplyMarkup(menu));
         } catch (TelegramApiException e) {
-            System.out.println("Could not send video " + e.toString());
+            System.out.println("Could not send video " + sendVideo.toString());
         }
 
     }

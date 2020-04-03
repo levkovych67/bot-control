@@ -53,7 +53,7 @@ public class DarkBot extends TelegramLongPollingBot {
         try {
             execute(sendVideo);
         } catch (TelegramApiException e) {
-            System.out.println("Could not send video " + e.toString());
+            System.out.println("Could not send video " + sendVideo.toString());
         }
     }
 }
