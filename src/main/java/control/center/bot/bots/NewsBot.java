@@ -94,7 +94,7 @@ public class NewsBot extends TelegramLongPollingBot {
         try {
             execute(sendVideo);
         } catch (TelegramApiException e) {
-            e.printStackTrace();
+            System.out.println("Couldnt send video" + sendVideo.toString());
         }
     }
 

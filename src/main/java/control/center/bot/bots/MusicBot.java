@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class MusicBot extends TelegramLongPollingBot {
 
     private static final Long MUS_ID = -1001376648948L;
-    private static final String MUSIC_CRON = "1 */1 * * * *";
+    private static final String MUSIC_CRON = "1 */10 * * * *";
     private List<String> searchWords = Arrays.asList("музыка", "music", "музыкальный");
     private ContentGetter contentGetter = new ContentGetter(searchWords, Collections.emptyList());
 
@@ -50,7 +50,7 @@ public class MusicBot extends TelegramLongPollingBot {
 
     private void send(SendVideo sendVideo) {
         try {
-            execute(sendVideo.setCaption(contentGetter.getMetaData()));
+            execute(sendVideo);
         } catch (TelegramApiException e) {
             System.out.println("can't send music " + sendVideo.toString());
         }

@@ -104,7 +104,7 @@ public class BotLikeConsumer extends TelegramLongPollingBot {
         try {
             return execute(sendVideo);
         } catch (TelegramApiException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Couldnt send video" + sendVideo.toString());
         }
         return null;
     }
