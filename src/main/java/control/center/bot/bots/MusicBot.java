@@ -52,7 +52,7 @@ public class MusicBot extends TelegramLongPollingBot {
         try {
             execute(sendVideo.setCaption(contentGetter.getMetaData()));
         } catch (TelegramApiException e) {
-            System.out.println("can't send fap");
+            System.out.println("can't send music " + sendVideo.toString());
         }
     }
 

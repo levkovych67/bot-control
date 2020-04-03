@@ -35,7 +35,7 @@ public class FapBot extends TelegramLongPollingBot {
         try {
             execute(sendVideo);
         } catch (TelegramApiException e) {
-            System.out.println("can't send fap");
+            System.out.println("can't send fap " + sendVideo.toString());
         }
     }
 
