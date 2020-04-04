@@ -1,6 +1,7 @@
 package control.center.bot;
 
 import control.center.bot.bots.*;
+import control.center.bot.thunder.ThunderExtra;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Configuration;
@@ -30,6 +31,7 @@ public class BotApplication {
         final MusicBot musicBot = new MusicBot();
         final QuizBot quizBot = new QuizBot();
         final BotLikeConsumer botLikeConsumer = new BotLikeConsumer();
+        final ThunderExtra thunderExtra = new ThunderExtra();
 
         try {
             botsApi.registerBot(darkBot);
@@ -42,6 +44,7 @@ public class BotApplication {
             botsApi.registerBot(animeBot);
             botsApi.registerBot(quizBot);
             botsApi.registerBot(botLikeConsumer);
+            botsApi.registerBot(thunderExtra);
 
         } catch (TelegramApiRequestException e1) {
             e1.printStackTrace();
