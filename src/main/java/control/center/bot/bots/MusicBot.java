@@ -1,6 +1,7 @@
 package control.center.bot.bots;
 
 import control.center.bot.object.SendVideoFileHolder;
+import control.center.bot.scrapers.ThreadService;
 import control.center.bot.service.ContentGetter;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -13,12 +14,14 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class MusicBot extends TelegramLongPollingBot {
 
     private static final Long MUS_ID = -1001376648948L;
-    private static final String MUSIC_CRON = "1 */5 * * * *";
+    private static final String MUSIC_CRON = "1 */10 * * * *";
     private List<String> searchWords = Arrays.asList("музыка", "music", "музыкальный");
     private ContentGetter contentGetter = new ContentGetter(searchWords, Collections.emptyList());
 
@@ -29,7 +32,6 @@ public class MusicBot extends TelegramLongPollingBot {
             send(video.getSendVideo().setChatId(MUS_ID));
             video.deleteFiles();
         }
-
     }
 
     private void sendText(String text) {
