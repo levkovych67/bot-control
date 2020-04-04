@@ -14,6 +14,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 @SpringBootApplication
 public class BotApplication {
 
+
     public static void main(String[] args) {
         ApiContextInitializer.init();
         TelegramBotsApi botsApi = new TelegramBotsApi();
@@ -38,7 +39,6 @@ public class BotApplication {
             botsApi.registerBot(fapBot);
             botsApi.registerBot(infoBot);
             botsApi.registerBot(animeBot);
-            botsApi.registerBot(videoBot);
             botsApi.registerBot(quizBot);
             botsApi.registerBot(botLikeConsumer);
 

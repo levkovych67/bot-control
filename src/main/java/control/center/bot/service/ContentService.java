@@ -20,7 +20,6 @@ public interface ContentService {
         return getVideosFromPosts(posts);
     }
 
-
     static Set<String> getPics(List<String> searchWords, List<String> exceptionalWords) {
         Set<Post> posts = getPosts(searchWords, exceptionalWords);
         return getPicsFromPosts(posts);
