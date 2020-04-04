@@ -31,7 +31,7 @@ public class VideoBot extends TelegramLongPollingBot {
             Util.getVideoLink(update)
                     .ifPresent(s -> send(
                             new SendVideo().setVideo(s),
-                            Configuration.THUNDER_ID,
+                            Long.valueOf(update.getCallbackQuery().getData()),
                             null));
         }
     }
@@ -51,9 +51,7 @@ public class VideoBot extends TelegramLongPollingBot {
         SendVideoFileHolder video = contentGetter.getVideo();
         if (video != null) {
             Configuration.admins.forEach(adminId -> send(
-                    video
-                            .getSendVideo()
-                            .setCaption(contentGetter.getMetaData()),
+                    video.getSendVideo(),
                     adminId,
                     Util.createLikeMenu()));
             video.deleteFiles();

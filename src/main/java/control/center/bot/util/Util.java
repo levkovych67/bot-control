@@ -1,6 +1,7 @@
 package control.center.bot.util;
 
 
+import control.center.bot.configuration.Configuration;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jsoup.Jsoup;
@@ -14,6 +15,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static control.center.bot.configuration.Configuration.THUNDER_ID;
+import static control.center.bot.configuration.Configuration.friendlyChats;
 
 public class Util {
 
@@ -104,11 +108,22 @@ public class Util {
         return inlineKeyboardMarkup;
     }
 
+    public static InlineKeyboardMarkup createKeyFewBoardRow(List<List<InlineKeyboardButton>> list) {
+        final InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        inlineKeyboardMarkup.setKeyboard(list);
+        return inlineKeyboardMarkup;
+    }
+
     public static InlineKeyboardMarkup createLikeMenu() {
-        return Util.createKeyBoardRow(
+        return Util.createKeyFewBoardRow(
                 Arrays.asList(
-                        Util.createInlineButtonText(
-                                "\uD83D\uDC4D️", "like")));
+                        Arrays.asList(
+                                Util.createInlineButtonText("Блискавка 2.0", THUNDER_ID.toString()),
+                                Util.createInlineButtonText("/DARK", Configuration.DARK_ID.toString())),
+                        Arrays.asList(
+                                Util.createInlineButtonText("/fap", Configuration.FAP_ID.toString()),
+                                Util.createInlineButtonText("/music", Configuration.MUS_ID.toString()))
+                ));
     }
 
     public static InlineKeyboardMarkup createThunderLikeMenu(Integer likes, Integer dislikes, Integer rofls, Integer shits) {
@@ -260,5 +275,12 @@ public class Util {
     }
 
 
+    public static Boolean isForwardedFromFriendlyChat(Update update) {
+        try {
+            return friendlyChats.contains(update.getChannelPost().getForwardFromChat().getId());
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }
 
