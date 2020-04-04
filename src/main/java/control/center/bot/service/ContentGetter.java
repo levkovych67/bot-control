@@ -31,7 +31,5 @@ public class ContentGetter {
         return holder.getPicture();
     }
 
-    public String getMetaData() {
-        return holder.metaData();
-    }
+
 }

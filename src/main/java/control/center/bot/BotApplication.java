@@ -37,6 +37,7 @@ public class BotApplication {
             botsApi.registerBot(picBot);
             botsApi.registerBot(newsBot);
             botsApi.registerBot(fapBot);
+            botsApi.registerBot(videoBot);
             botsApi.registerBot(infoBot);
             botsApi.registerBot(animeBot);
             botsApi.registerBot(quizBot);

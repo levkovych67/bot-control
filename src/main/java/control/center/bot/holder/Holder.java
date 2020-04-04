@@ -75,7 +75,4 @@ public class Holder {
         return Optional.empty();
     }
 
-    public String metaData() {
-        return "Лишилось " + this.videos.size() + " із " + this.totalVideos;
-    }
 }

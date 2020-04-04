@@ -19,17 +19,19 @@ public class BotLikeConsumer extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        if (Util.forLikerPost(update) && !Util.isNews(update)) {
-            final Optional<SendPhoto> sendPhoto = LikerBuildingUtils.buildSendPhoto(update);
-            if (sendPhoto.isPresent()) {
-                processPhoto(sendPhoto.get(), update);
-            } else {
-                LikerBuildingUtils.buildSendVideo(update).ifPresent(sendVideo -> processVideo(sendVideo, update));
-            }
+        if (!Util.isForwardedFromFriendlyChat(update)) {
+            if (Util.forLikerPost(update) && !Util.isNews(update)) {
+                final Optional<SendPhoto> sendPhoto = LikerBuildingUtils.buildSendPhoto(update);
+                if (sendPhoto.isPresent()) {
+                    processPhoto(sendPhoto.get(), update);
+                } else {
+                    LikerBuildingUtils.buildSendVideo(update).ifPresent(sendVideo -> processVideo(sendVideo, update));
+                }
 
-        }
-        if (Util.isReaction(update)) {
-            processLiked(update);
+            }
+            if (Util.isReaction(update)) {
+                processLiked(update);
+            }
         }
     }
 

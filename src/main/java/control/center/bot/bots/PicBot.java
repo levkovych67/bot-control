@@ -29,7 +29,7 @@ public class PicBot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         if (!Util.isChannelPost(update)) {
             final String fileId = update.getCallbackQuery().getMessage().getPhoto().get(0).getFileId();
-            sendPhotoWithMenu(fileId, Configuration.THUNDER_ID, null);
+            sendPhotoWithMenu(fileId, Long.valueOf(update.getCallbackQuery().getData()), null);
         }
     }
 
