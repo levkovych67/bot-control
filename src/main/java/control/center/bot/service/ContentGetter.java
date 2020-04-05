@@ -20,7 +20,8 @@ public class ContentGetter {
 
     public SendVideoFileHolder getVideo() {
         Optional<String> video = holder.getVideo();
-        return video.map(s -> SendVideoFileHolder.init(
+        return video.map(s ->
+                SendVideoFileHolder.init(
                 SendVideoPreprocessor.process(s),
                 s
         )).orElse(null);

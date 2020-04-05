@@ -7,8 +7,11 @@ public class Configuration {
 
     public static final Long BOHDAN_ADMIN_ID = 475949588L;
     public static final List<Long> admins = Arrays.asList(368935283L, 475949588L);
-    public static final String DARK_CRON = "0 */15 * * * *";
+
+    public static final String DARK_CRON = "0 */24 * * * *";
     public static final String EVENING_CORONA_POST = "0 30 23 * * *";
+
+
     public static String TWO_CH_URL = "https://2ch.hk";
     public static String deganchanchannellink = "https://t.me/joinchat/AAAAAETS87l2Y-yRt1iOXg";
     public static String black = "https://t.me/joinchat/AAAAAFhwdFepcqdUz7MGMQ";
