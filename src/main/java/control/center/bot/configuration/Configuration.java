@@ -8,7 +8,7 @@ public class Configuration {
     public static final Long BOHDAN_ADMIN_ID = 475949588L;
     public static final List<Long> admins = Arrays.asList(368935283L, 475949588L);
 
-    public static final String DARK_CRON = "0 */24 * * * *";
+
     public static final String EVENING_CORONA_POST = "0 30 23 * * *";
 
 
