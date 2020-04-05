@@ -37,7 +37,10 @@ public class VideoBot extends TelegramLongPollingBot {
         String data = update.getCallbackQuery().getData();
         if (data.equals("delete")) {
             try {
-                execute(new DeleteMessage().setMessageId(update.getMessage().getMessageId()));
+                execute(new DeleteMessage()
+                        .setMessageId(update.getCallbackQuery().getMessage().getMessageId())
+                        .setChatId(update.getCallbackQuery().getMessage().getChatId())
+                );
             } catch (TelegramApiException e) {
                 e.printStackTrace();
             }
