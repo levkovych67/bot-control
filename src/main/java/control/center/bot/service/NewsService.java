@@ -62,7 +62,7 @@ public class NewsService {
         File file = null;
 
         try {
-            file = new File("./src/main/resources/corona.png");
+            file = new File("./src/main/resources/corona.jpg");
         } catch (Exception e) {
             throw new RuntimeException("Could not get file ebat");
         }

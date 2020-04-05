@@ -26,7 +26,7 @@ import static control.center.bot.util.Util.*;
 @Component
 public class NewsBot extends TelegramLongPollingBot {
 
-    private static final String MORNING_CORONA_POST = "0 45 9 * * *";
+    private static final String MORNING_CORONA_POST = "0 00 10 * * *";
     private static final String EVENING_CORONA_POST = "0 30 21 * * *";
 
     @Override
