@@ -122,7 +122,10 @@ public class Util {
                                 Util.createInlineButtonText("/DARK", Configuration.DARK_ID.toString())),
                         Arrays.asList(
                                 Util.createInlineButtonText("/fap", Configuration.FAP_ID.toString()),
-                                Util.createInlineButtonText("/music", Configuration.MUS_ID.toString()))
+                                Util.createInlineButtonText("/music", Configuration.MUS_ID.toString())),
+                        Arrays.asList(
+                                Util.createInlineButtonText("хуєта", "delete")
+                        )
                 ));
     }
 

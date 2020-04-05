@@ -9,6 +9,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendVideo;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.DeleteMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
@@ -28,12 +29,26 @@ public class VideoBot extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         if (!Util.isChannelPost(update)) {
+            processAdminRequest(update);
+        }
+    }
+
+    private void processAdminRequest(Update update) {
+        String data = update.getCallbackQuery().getData();
+        if (data.equals("delete")) {
+            try {
+                execute(new DeleteMessage().setMessageId(update.getMessage().getMessageId()));
+            } catch (TelegramApiException e) {
+                e.printStackTrace();
+            }
+        } else {
             Util.getVideoLink(update)
                     .ifPresent(s -> send(
                             new SendVideo().setVideo(s),
-                            Long.valueOf(update.getCallbackQuery().getData()),
+                            Long.valueOf(data),
                             null));
         }
+
     }
 
     @Override
