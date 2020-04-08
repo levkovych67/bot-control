@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.DeleteMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
@@ -27,7 +28,17 @@ public class PicBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        if (!Util.isChannelPost(update)) {
+        String data = update.getCallbackQuery().getData();
+        if (data.equals("delete")) {
+            try {
+                execute(new DeleteMessage()
+                        .setMessageId(update.getCallbackQuery().getMessage().getMessageId())
+                        .setChatId(update.getCallbackQuery().getMessage().getChatId())
+                );
+            } catch (TelegramApiException e) {
+                e.printStackTrace();
+            }
+        } else {
             final String fileId = update.getCallbackQuery().getMessage().getPhoto().get(0).getFileId();
             sendPhotoWithMenu(fileId, Long.valueOf(update.getCallbackQuery().getData()), null);
         }
