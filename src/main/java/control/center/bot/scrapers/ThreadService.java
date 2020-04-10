@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class ThreadService {
 
-    private static Set<ThreadHead> getOpPostsFromB() {
+    public static Set<ThreadHead> getOpPostsFromB() {
         try {
             HashSet<ThreadHead> collect =
                     new RestTemplate().getForEntity("https://2ch.hk/b/catalog.json", Board.class)

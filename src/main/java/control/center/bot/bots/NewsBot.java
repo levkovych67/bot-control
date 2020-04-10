@@ -3,6 +3,8 @@ package control.center.bot.bots;
 
 import control.center.bot.configuration.Configuration;
 import control.center.bot.object.NewsThread;
+import control.center.bot.object.ThreadHead;
+import control.center.bot.scrapers.ThreadService;
 import control.center.bot.service.NewsService;
 import control.center.bot.util.NewsUtil;
 import control.center.bot.util.TYPE;
@@ -10,6 +12,7 @@ import control.center.bot.util.Util;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.methods.send.SendVideo;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -17,8 +20,10 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static control.center.bot.util.Util.*;
 
@@ -27,7 +32,9 @@ import static control.center.bot.util.Util.*;
 public class NewsBot extends TelegramLongPollingBot {
 
     private static final String MORNING_CORONA_POST = "0 30 9 * * *";
+    private static final String THREAD_UPDATER = "0 */5 * * * *";
     private static final String EVENING_CORONA_POST = "0 30 22 * * *";
+    private static LinkedList<SendMessage> threads = new LinkedList<>();
 
     @Override
     public void onUpdateReceived(Update update) {
@@ -83,7 +90,34 @@ public class NewsBot extends TelegramLongPollingBot {
         send(sendPhoto);
     }
 
+    @Scheduled(cron = THREAD_UPDATER)
+    public void sendThread() {
+        SendMessage poll = threads.poll();
+        if (poll == null) {
+            refreshLinkedList();
+            send(threads.poll());
+        } else {
+            send(poll);
+        }
 
+    }
+
+    private void refreshLinkedList() {
+        threads = ThreadService
+                .getOpPostsFromB()
+                .stream()
+                .map(this::createMessage)
+                .collect(Collectors.toCollection(LinkedList::new);
+
+    }
+
+    void send(SendMessage sendMessage) {
+        try {
+            execute(sendMessage);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+    }
     @Scheduled(cron = EVENING_CORONA_POST)
     public void sentCoronaEveningUpdate() {
         SendPhoto sendPhoto = NewsService.getCoronaPost("Вечерня ").setChatId(Configuration.THUNDER_ID);
@@ -117,4 +151,11 @@ public class NewsBot extends TelegramLongPollingBot {
         return "825441785:AAH0KTVX0ias5EraSIhO1WOs7liW8GhsUu4";
     }
 
+    private SendMessage createMessage(ThreadHead threadHead) {
+        String text = threadHead.getText() + "\n" +
+                Configuration.TWO_CH_URL + "/b/res/" + threadHead.getId() + ".html";
+        return new SendMessage().setChatId(Configuration.BOHDAN_ADMIN_ID)
+                .setText(text);
+
+    }
 }
