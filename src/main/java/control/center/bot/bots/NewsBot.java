@@ -107,8 +107,7 @@ public class NewsBot extends TelegramLongPollingBot {
                 .getOpPostsFromB()
                 .stream()
                 .map(this::createMessage)
-                .collect(Collectors.toCollection(LinkedList::new);
-
+                .collect(Collectors.toCollection(LinkedList::new));
     }
 
     void send(SendMessage sendMessage) {
