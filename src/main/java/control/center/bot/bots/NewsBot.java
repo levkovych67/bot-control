@@ -183,11 +183,4 @@ public class NewsBot extends TelegramLongPollingBot {
         return "825441785:AAH0KTVX0ias5EraSIhO1WOs7liW8GhsUu4";
     }
 
-    private SendMessage createMessage(ThreadHead threadHead) {
-        String text = threadHead.getText() + "\n" +
-                Configuration.TWO_CH_URL + "/b/res/" + threadHead.getId() + ".html";
-        return new SendMessage().setChatId(Configuration.BOHDAN_ADMIN_ID)
-                .setText(text);
-
-    }
 }
