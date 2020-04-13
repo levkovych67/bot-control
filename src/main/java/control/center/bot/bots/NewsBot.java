@@ -33,12 +33,11 @@ public class NewsBot extends TelegramLongPollingBot {
     private static final String MORNING_CORONA_POST = "0 30 9 * * *";
     private static final String CHECK_CHAT = "0 */5 * * * *";
     private static final String EVENING_CORONA_POST = "0 30 22 * * *";
-    private static LinkedList<SendMessage> threads = new LinkedList<>();
 
-    private Integer THUNDER_COUNT;
-    private Integer FAP_COUNT;
-    private Integer DARK_COUNT;
-    private Integer MUSIC_COUNT;
+    private Integer THUNDER_COUNT = 0;
+    private Integer FAP_COUNT = 0;
+    private Integer DARK_COUNT = 0;
+    private Integer MUSIC_COUNT = 0;
 
 
     @Override
