@@ -4,7 +4,6 @@ package control.center.bot.bots;
 import control.center.bot.configuration.Configuration;
 import control.center.bot.object.NewsThread;
 import control.center.bot.object.ThreadHead;
-import control.center.bot.scrapers.ThreadService;
 import control.center.bot.service.NewsService;
 import control.center.bot.util.NewsUtil;
 import control.center.bot.util.TYPE;
@@ -12,6 +11,7 @@ import control.center.bot.util.Util;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.groupadministration.GetChatMembersCount;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.methods.send.SendVideo;
@@ -23,7 +23,6 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import static control.center.bot.util.Util.*;
 
@@ -32,9 +31,15 @@ import static control.center.bot.util.Util.*;
 public class NewsBot extends TelegramLongPollingBot {
 
     private static final String MORNING_CORONA_POST = "0 30 9 * * *";
-    private static final String THREAD_UPDATER = "0 */5 * * * *";
+    private static final String CHECK_CHAT = "0 */5 * * * *";
     private static final String EVENING_CORONA_POST = "0 30 22 * * *";
     private static LinkedList<SendMessage> threads = new LinkedList<>();
+
+    private Integer THUNDER_COUNT;
+    private Integer FAP_COUNT;
+    private Integer DARK_COUNT;
+    private Integer MUSIC_COUNT;
+
 
     @Override
     public void onUpdateReceived(Update update) {
@@ -90,24 +95,52 @@ public class NewsBot extends TelegramLongPollingBot {
         send(sendPhoto);
     }
 
-    @Scheduled(cron = THREAD_UPDATER)
+    public static void main(String[] args) {
+        GetChatMembersCount chat = new GetChatMembersCount().setChatId(Configuration.THUNDER_ID);
+        System.out.println(chat.getMethod());
+    }
+
+    @Scheduled(cron = CHECK_CHAT)
     public void sendThread() {
-        SendMessage poll = threads.poll();
-        if (poll == null) {
-            refreshLinkedList();
-            send(threads.poll());
-        } else {
-            send(poll);
+        Integer thunder = sendCheckChat(Configuration.THUNDER_ID);
+        if (sendChannelUpdate(thunder, THUNDER_COUNT, "Bliskavka 2.0")) {
+            THUNDER_COUNT = thunder;
+        }
+        Integer fap = sendCheckChat(Configuration.FAP_ID);
+        if (sendChannelUpdate(fap, FAP_COUNT, "/fap")) {
+            FAP_COUNT = fap;
+        }
+        Integer dark = sendCheckChat(Configuration.DARK_ID);
+        if (sendChannelUpdate(dark, DARK_COUNT, "/dark")) {
+            DARK_COUNT = dark;
+        }
+        Integer musci = sendCheckChat(Configuration.MUS_ID);
+        if (sendChannelUpdate(musci, MUSIC_COUNT, "/music")) {
+            MUSIC_COUNT = musci;
         }
 
     }
 
-    private void refreshLinkedList() {
-        threads = ThreadService
-                .getOpPostsFromB()
-                .stream()
-                .map(this::createMessage)
-                .collect(Collectors.toCollection(LinkedList::new));
+    public Boolean sendChannelUpdate(Integer newCount, Integer lastCount, String channelName) {
+        if (!newCount.equals(lastCount)) {
+            Integer diff = newCount - lastCount;
+
+            send(new SendMessage().setChatId(Configuration.BOHDAN_ADMIN_ID)
+                    .setText(String.format("Channel %s has diff %d, now subscription count is %s",
+                            channelName, diff, newCount)));
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    Integer sendCheckChat(Long chatId) {
+        try {
+            return execute(new GetChatMembersCount().setChatId(chatId));
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+        throw new RuntimeException();
     }
 
     void send(SendMessage sendMessage) {
@@ -122,6 +155,7 @@ public class NewsBot extends TelegramLongPollingBot {
         SendPhoto sendPhoto = NewsService.getCoronaPost("Вечерня ").setChatId(Configuration.THUNDER_ID);
         send(sendPhoto);
     }
+
 
     private void send(SendVideo sendVideo) {
         try {
