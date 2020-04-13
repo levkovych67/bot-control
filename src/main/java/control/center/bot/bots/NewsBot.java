@@ -31,7 +31,7 @@ import static control.center.bot.util.Util.*;
 public class NewsBot extends TelegramLongPollingBot {
 
     private static final String MORNING_CORONA_POST = "0 30 9 * * *";
-    private static final String CHECK_CHAT = "0 */5 * * * *";
+    private static final String CHECK_CHAT = "0 0 * * * *";
     private static final String EVENING_CORONA_POST = "0 30 22 * * *";
 
     private Integer THUNDER_COUNT = 0;
