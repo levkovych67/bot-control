@@ -3,9 +3,7 @@ package control.center.bot.holder;
 import control.center.bot.service.ContentService;
 import control.center.bot.service.SentService;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class Holder {
 
@@ -25,6 +23,7 @@ public class Holder {
         this.searchWords = searchWords;
         this.exceptionalWords = exceptionalWords;
     }
+
 
     private void refreshVideos() {
 

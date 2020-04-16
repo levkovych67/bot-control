@@ -94,11 +94,6 @@ public class NewsBot extends TelegramLongPollingBot {
         send(sendPhoto);
     }
 
-    public static void main(String[] args) {
-        GetChatMembersCount chat = new GetChatMembersCount().setChatId(Configuration.THUNDER_ID);
-        System.out.println(chat.getMethod());
-    }
-
     @Scheduled(cron = CHECK_CHAT)
     public void sendThread() {
         Integer thunder = sendCheckChat(Configuration.THUNDER_ID);

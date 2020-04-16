@@ -4,9 +4,7 @@ import control.center.bot.object.Post;
 import control.center.bot.object.ThreadHead;
 import control.center.bot.scrapers.ThreadService;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static control.center.bot.service.PostService.getPicsFromPosts;
@@ -30,6 +28,4 @@ public interface ContentService {
         return threadHeads.stream().map(e -> PostService.getAllPostsFromThread(e.getId()))
                 .flatMap(Collection::stream).collect(Collectors.toSet());
     }
-
-
 }
