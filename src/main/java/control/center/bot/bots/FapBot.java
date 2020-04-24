@@ -9,6 +9,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendVideo;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -18,11 +19,10 @@ import java.util.List;
 public class FapBot extends TelegramLongPollingBot {
 
     private static final Long FAP_ID = -1001482709087L;
-    private static final String FAP_CRON = "1 */24 * * * *";
+    private static final String FAP_CRON = "1 */15 * * * *";
     private List<String> searchWords = Arrays.asList("fap", "фап", "porn", "sex", "прон");
-    private List<String> exception = Arrays.asList("trap", "трап");
 
-    private ContentGetter contentGetter = new ContentGetter(searchWords, exception);
+    private ContentGetter contentGetter = new ContentGetter(searchWords, new ArrayList<>());
 
     @Scheduled(cron = FAP_CRON)
     public void send() {
