@@ -20,7 +20,7 @@ import java.util.List;
 @Component
 public class VideoBot extends TelegramLongPollingBot {
 
-    private static final String VIDEO_CRON = "1 */2 * * * *";
+    private static final String VIDEO_CRON = "1 */8 * * * *";
     private List<String> searchWords = Arrays.asList("mp4", "webm", "mp3", "шебм", "обосрался", "жпег", "засмеялся");
     private List<String> exceptions = Arrays.asList("аниме", "anime", "ониме", "black", "dark", "дарк");
 
