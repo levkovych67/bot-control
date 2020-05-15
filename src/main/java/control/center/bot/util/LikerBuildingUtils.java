@@ -15,7 +15,10 @@ public class LikerBuildingUtils {
                 String contentId = Util.getContentId(update);
                 SendVideo sendVideo = new SendVideo()
                         .setChatId(update.getChannelPost().getChatId())
-                        .setCaption(update.getChannelPost().getCaption())
+                        .setParseMode("HTML")
+                        .setCaption(
+                                (new Random().nextInt(10) > 3 ? "<a href=\"https://t.me/joinchat/AAAAAETS87l2Y-yRt1iOXg\">Блискавка 2.0</a>\n" : "")
+                                + (update.getChannelPost().getCaption() == null ? "" : update.getChannelPost().getCaption()))
                         .setVideo(contentId)
                         .setReplyMarkup(Util.createThunderLikeMenu(
                                 0, 0, 0, 0
@@ -31,19 +34,29 @@ public class LikerBuildingUtils {
 
     }
 
+    public static void main(String[] args) {
+        System.out.println();
+        System.out.println(new Random().nextInt(10));
+        System.out.println(new Random().nextInt(10));
+        System.out.println(new Random().nextInt(10));
+    }
+
     public static Optional<SendPhoto> buildSendPhoto(Update update) {
         try {
             if (update.getChannelPost().getPhoto() != null) {
+
+
                 SendPhoto sendPhoto = new SendPhoto()
                         .setChatId(update.getChannelPost().getChatId())
-                        .setCaption(update.getChannelPost().getCaption())
+                        .setCaption("<a href=\"https://t.me/joinchat/AAAAAETS87l2Y-yRt1iOXg\">Блискавка 2.0</a>" + "\n "
+                                + (update.getChannelPost().getCaption() == null ? "" : update.getChannelPost().getCaption()))
                         .setPhoto(update.getChannelPost().getPhoto().get(0).getFileId())
+                        .setParseMode("HTML")
                         .setReplyMarkup(Util.createThunderLikeMenu(
                                 new Random().nextInt(25),
                                 new Random().nextInt(10),
                                 new Random().nextInt(14),
-                                new Random().nextInt(18)
-                        ));
+                                new Random().nextInt(18)));
                 return Optional.of(sendPhoto);
 
             } else {

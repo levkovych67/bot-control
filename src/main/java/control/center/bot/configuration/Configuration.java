@@ -6,7 +6,7 @@ import java.util.List;
 public class Configuration {
 
     public static final Long BOHDAN_ADMIN_ID = 475949588L;
-    public static final List<Long> admins = Arrays.asList(368935283L, 475949588L);
+    public static final List<Long> admins = Arrays.asList(244725463L, 368935283L, 475949588L);
 
 
     public static final String EVENING_CORONA_POST = "0 30 23 * * *";
