@@ -43,8 +43,8 @@ public class BotApplication {
             botsApi.registerBot(animeBot);
             botsApi.registerBot(quizBot);
             botsApi.registerBot(botLikeConsumer);
-        } catch (TelegramApiRequestException e1) {
-            e1.printStackTrace();
+        } catch (Exception ignored) {
+
         }
 
         SpringApplication.run(BotApplication.class, args);

@@ -1,7 +1,7 @@
 package control.center.bot.bots;
 
 
-import control.center.bot.configuration.Configuration;
+ import control.center.bot.configuration.Configuration;
 import control.center.bot.service.ContentGetter;
 import control.center.bot.util.Util;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -13,9 +13,9 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+ import java.util.concurrent.atomic.AtomicReference;
+ import java.util.stream.Collectors;
 
 
 @Component
@@ -70,6 +70,15 @@ public class PicBot extends TelegramLongPollingBot {
         } catch (TelegramApiException e) {
             System.out.println("Could not send photo " + link.toString());
         }
+    }
+
+
+    public static List<String> sentenceToArray(String sentence){
+        return Arrays.asList(sentence.split(" "));
+    }
+
+    public static String revertLetters(String word){
+       return new StringBuilder(word).reverse().toString();
     }
 }
 

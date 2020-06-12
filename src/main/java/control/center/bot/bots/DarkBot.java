@@ -20,7 +20,7 @@ public class DarkBot extends TelegramLongPollingBot {
     private Long DARK_ID = -1001483764823L;
     private List<String> searchWords = Arrays.asList("dark", "black", "дарк", "блек", "military", "милитари");
     private ContentGetter contentGetter = new ContentGetter(searchWords, Collections.emptyList());
-    public static final String DARK_CRON = "0 */24 * * * *";
+    public static final String DARK_CRON = "0 */60  * * * *";
 
     @Override
     public void onUpdateReceived(Update update) {

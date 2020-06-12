@@ -19,7 +19,7 @@ import java.util.List;
 public class FapBot extends TelegramLongPollingBot {
 
     private static final Long FAP_ID = -1001482709087L;
-    private static final String FAP_CRON = "1 */15 * * * *";
+    private static final String FAP_CRON = "1 */45 * * * *";
 
     private List<String> searchWords = Arrays.asList("fap", "фап", "porn", "sex", "прон");
 
