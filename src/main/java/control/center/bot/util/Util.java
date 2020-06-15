@@ -135,7 +135,7 @@ public class Util {
                         Util.createInlineButtonText("\uD83D\uDC4D️ " + likes, "like::" + likes),
                         Util.createInlineButtonText("\uD83D\uDC4E " + dislikes, "dislike::" + dislikes),
                         Util.createInlineButtonText("\uD83D\uDE2D " + rofls, "rofl::" + rofls),
-                        Util.createInlineButtonText("\uD83D\uDCA9️ " + shits, "shit::" + shits)
+                        Util.createInlineButtonLink("\uD83D\uDCB5", "https://www.donationalerts.com/r/bliskavka")
                 ));
     }
 
@@ -222,7 +222,7 @@ public class Util {
                 .getMessage()
                 .getReplyMarkup()
                 .getKeyboard()
-                .get(0);
+                .get(0).stream().filter(e -> e.getUrl() == null).collect(Collectors.toList());
 
         String reaction = getReaction(update.getCallbackQuery().getData()).getKey();
         Map<String, Integer> collect = inlineKeyboardButtons.stream()

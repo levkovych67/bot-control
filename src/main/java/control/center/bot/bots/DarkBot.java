@@ -2,6 +2,7 @@ package control.center.bot.bots;
 
 import control.center.bot.object.SendVideoFileHolder;
 import control.center.bot.service.ContentGetter;
+import control.center.bot.util.Util;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -12,6 +13,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 
 @Component
@@ -41,12 +43,27 @@ public class DarkBot extends TelegramLongPollingBot {
     public void send() {
         SendVideoFileHolder video = contentGetter.getVideo();
         if (video != null) {
-            send(video.getSendVideo().setChatId(DARK_ID));
+            send(buildWithButton(video));
             video.deleteFiles();
         }
-
-
     }
+
+    public SendVideo buildWithButton(SendVideoFileHolder video){
+        if (createButton()){
+            return video.getSendVideo()
+                    .setReplyMarkup(Util.createKeyBoardRow(Arrays.asList(Util.createInlineButtonLink("\uD83D\uDCB5 на мивинку чи контент", "https://www.donationalerts.com/r/bliskavka"))))
+                    .setChatId(DARK_ID);
+
+        } else {
+             return video.getSendVideo().setChatId(DARK_ID);
+        }
+    }
+
+    public static Boolean createButton(){
+       return new Random().nextBoolean();
+    }
+
+
 
     private void send(SendVideo sendVideo) {
         try {

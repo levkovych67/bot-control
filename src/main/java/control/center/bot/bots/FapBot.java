@@ -2,6 +2,7 @@ package control.center.bot.bots;
 
 import control.center.bot.object.SendVideoFileHolder;
 import control.center.bot.service.ContentGetter;
+import control.center.bot.util.Util;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -9,10 +10,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendVideo;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 
 @Component
@@ -29,7 +27,7 @@ public class FapBot extends TelegramLongPollingBot {
     public void send() {
         SendVideoFileHolder video = contentGetter.getVideo();
         if (video != null) {
-            send(video.getSendVideo().setChatId(FAP_ID));
+            send(buildWithButton(video));
             video.deleteFiles();
         }
     }
@@ -40,6 +38,21 @@ public class FapBot extends TelegramLongPollingBot {
         } catch (TelegramApiException e) {
             System.out.println("can't send fap " + sendVideo.toString());
         }
+    }
+
+    public SendVideo buildWithButton(SendVideoFileHolder video){
+        if (createButton()){
+            return video.getSendVideo()
+                    .setReplyMarkup(Util.createKeyBoardRow(Arrays.asList(Util.createInlineButtonLink("\uD83D\uDCB5 на мивинку чи контент", "https://www.donationalerts.com/r/bliskavka"))))
+                    .setChatId(FAP_ID);
+
+        } else {
+            return video.getSendVideo().setChatId(FAP_ID);
+        }
+    }
+
+    public static Boolean createButton(){
+        return new Random().nextBoolean();
     }
 
     @Override
