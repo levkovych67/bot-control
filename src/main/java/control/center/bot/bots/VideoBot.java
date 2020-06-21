@@ -1,26 +1,31 @@
 package control.center.bot.bots;
 
 
+import com.google.api.services.youtube.YouTube;
 import control.center.bot.configuration.Configuration;
 import control.center.bot.object.SendVideoFileHolder;
 import control.center.bot.service.ContentGetter;
 import control.center.bot.util.Util;
+import control.center.bot.youtube.YouTubeUploaderService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendVideo;
+import org.telegram.telegrambots.meta.api.methods.send.SendVideoNote;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.DeleteMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class VideoBot extends TelegramLongPollingBot {
 
-    private static final String VIDEO_CRON = "1 */8 * * * *";
+    private static final String VIDEO_CRON = "1 */4 * * * *";
     private List<String> searchWords = Arrays.asList("mp4", "webm", "mp3", "шебм", "обосрался", "жпег", "засмеялся");
     private List<String> exceptions = Arrays.asList("аниме", "anime", "ониме", "black", "dark", "дарк");
 
@@ -29,27 +34,22 @@ public class VideoBot extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         if (!Util.isChannelPost(update)) {
-            processAdminRequest(update);
+            try {
+                processAdminRequest(update);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    private void processAdminRequest(Update update) {
+    private void processAdminRequest(Update update) throws IOException {
         String data = update.getCallbackQuery().getData();
-        if (data.equals("delete")) {
-            try {
-                execute(new DeleteMessage()
-                        .setMessageId(update.getCallbackQuery().getMessage().getMessageId())
-                        .setChatId(update.getCallbackQuery().getMessage().getChatId())
-                );
-            } catch (TelegramApiException e) {
-                e.printStackTrace();
-            }
+        if (data.contains(".mp4")) {
+            YouTubeUploaderService.upload(data);
         } else {
-            Util.getVideoLink(update)
-                    .ifPresent(s -> send(
-                            new SendVideo().setVideo(s),
-                            Long.valueOf(data),
-                            null));
+            System.out.println(data);
+            Optional<String> videoLink = Util.getVideoLink(update);
+            videoLink.ifPresent(s -> send(new SendVideo().setVideo(s), Long.valueOf(data), null));
         }
 
     }
@@ -71,9 +71,9 @@ public class VideoBot extends TelegramLongPollingBot {
             Configuration.admins.forEach(adminId -> send(
                     video.getSendVideo(),
                     adminId,
-                    Util.createLikeMenu()));
-            video.deleteFiles();
-        }
+                    Util.createLikeMenuWithUtube(video)));
+                    video.deleteFiles();
+         }
 
     }
 

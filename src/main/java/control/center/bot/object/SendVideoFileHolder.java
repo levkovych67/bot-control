@@ -1,6 +1,7 @@
 package control.center.bot.object;
 
 import org.telegram.telegrambots.meta.api.methods.send.SendVideo;
+import org.telegram.telegrambots.meta.api.methods.send.SendVideoNote;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +14,10 @@ public class SendVideoFileHolder {
 
     private SendVideoFileHolder() {
 
+    }
+
+    public String getPath() {
+        return path;
     }
 
     public static SendVideoFileHolder init(SendVideo sendVideo, String path) {
@@ -34,7 +39,6 @@ public class SendVideoFileHolder {
         try {
             String mp4Path = sendVideo.getVideo().getNewMediaFile().getAbsolutePath();
             String webmPath = mp4Path.replace(".mp4", ".webm");
-            Files.deleteIfExists(new File(mp4Path).toPath());
             Files.deleteIfExists(new File(webmPath).toPath());
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,6 +1,7 @@
 package control.center.bot;
 
 import control.center.bot.bots.*;
+import control.center.bot.youtube.YouTubeAuthHolder;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +17,7 @@ public class BotApplication {
 
 
     public static void main(String[] args) {
+        YouTubeAuthHolder.initClient();
         ApiContextInitializer.init();
         TelegramBotsApi botsApi = new TelegramBotsApi();
 

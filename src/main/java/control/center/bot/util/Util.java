@@ -2,6 +2,7 @@ package control.center.bot.util;
 
 
 import control.center.bot.configuration.Configuration;
+import control.center.bot.object.SendVideoFileHolder;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jsoup.Jsoup;
@@ -122,11 +123,32 @@ public class Util {
                                 Util.createInlineButtonText("/DARK", Configuration.DARK_ID.toString())),
                         Arrays.asList(
                                 Util.createInlineButtonText("/fap", Configuration.FAP_ID.toString()),
+                                Util.createInlineButtonText("/music", Configuration.MUS_ID.toString()))
+                ));
+    }
+
+    public static InlineKeyboardMarkup createLikeMenuWithUtube(SendVideoFileHolder videoFileHolder) {
+        return Util.createKeyFewBoardRow(
+                Arrays.asList(
+                        Arrays.asList(
+                                Util.createInlineButtonText("Блискавка 2.0", THUNDER_ID.toString()),
+                                Util.createInlineButtonText("/DARK", Configuration.DARK_ID.toString())),
+                        Arrays.asList(
+                                Util.createInlineButtonText("/fap", Configuration.FAP_ID.toString()),
                                 Util.createInlineButtonText("/music", Configuration.MUS_ID.toString())),
                         Arrays.asList(
-                                Util.createInlineButtonText("хуєта", "delete")
+                                Util.createInlineButtonText("utube", Util.getFileLocation(videoFileHolder))
                         )
                 ));
+    }
+
+    private static String getFileLocation(SendVideoFileHolder videoFileHolder) {
+        try {
+            return videoFileHolder.getSendVideo().getVideo().getNewMediaFile().getAbsolutePath();
+
+        } catch (Exception exc){
+            return videoFileHolder.getPath();
+        }
     }
 
     public static InlineKeyboardMarkup createThunderLikeMenu(Integer likes, Integer dislikes, Integer rofls, Integer shits) {
