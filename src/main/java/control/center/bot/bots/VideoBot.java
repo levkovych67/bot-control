@@ -38,7 +38,7 @@ public class VideoBot extends TelegramLongPollingBot {
             try {
                 processAdminRequest(update);
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             }
         }
     }

@@ -31,7 +31,7 @@ public class BotApplication {
         final VideoBot videoBot = new VideoBot();
         final MusicBot musicBot = new MusicBot();
         final QuizBot quizBot = new QuizBot();
-        final BotLikeConsumer botLikeConsumer = new BotLikeConsumer();
+        //final BotLikeConsumer botLikeConsumer = new BotLikeConsumer();
 
 
         try {
@@ -44,7 +44,7 @@ public class BotApplication {
             botsApi.registerBot(infoBot);
             botsApi.registerBot(animeBot);
             botsApi.registerBot(quizBot);
-            botsApi.registerBot(botLikeConsumer);
+            //botsApi.registerBot(botLikeConsumer);
         } catch (Exception ignored) {
 
         }

@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 public class WatermarkService {
 
     private static String bliskavkaLink = "t.me/bliskavka2";
-    private  static String command = "ffmpeg -i \"%s\" -vf \"drawtext=text='%s':x=15:y=H-th-10:fontfile=/pathto/font.ttf:fontsize=20:fontcolor=white:shadowcolor=black:shadowx=2:shadowy=2\" \"%s\"";
+    private  static String command = "ffmpeg -i \"%s\" -vf \"drawtext=text='%s':x=if(eq(mod(t\\,30)\\,0)\\,rand(0\\,(w-text_w))\\,x):y=if(eq(mod(t\\,30)\\,0)\\,rand(0\\,(h-text_h))\\,y):fontfile=/pathto/font.ttf:fontsize=20:fontcolor=white:shadowcolor=black:shadowx=2:shadowy=2\" \"%s\"";
 
     public static String addWaterMark(String oldPath) {
         System.out.println("ADDING WATERMARK");

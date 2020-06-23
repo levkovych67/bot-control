@@ -2,9 +2,14 @@ package control.center.bot.bots;
 
 
 import control.center.bot.configuration.Configuration;
+import control.center.bot.object.db.TGUser;
+import control.center.bot.service.TGUserService;
 import control.center.bot.util.LikerBuildingUtils;
 import control.center.bot.util.Util;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.methods.send.SendVideo;
@@ -12,14 +17,40 @@ import org.telegram.telegrambots.meta.api.methods.updatingmessages.DeleteMessage
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import javax.annotation.PostConstruct;
+import java.util.List;
 import java.util.Optional;
 
 import static control.center.bot.util.Util.getReaction;
 
+@Component
 public class BotLikeConsumer extends TelegramLongPollingBot {
+
+    @Autowired
+    private TGUserService service;
+
+    public BotLikeConsumer(){}
+
+
+    @PostConstruct
+    public void init(){
+        TelegramBotsApi botsApi = new TelegramBotsApi();
+        try {
+            botsApi.registerBot(this);
+        } catch (TelegramApiException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Autowired
+    public BotLikeConsumer(TGUserService service) {
+        this.service = service;
+     }
+
 
     @Override
     public void onUpdateReceived(Update update) {
@@ -37,6 +68,10 @@ public class BotLikeConsumer extends TelegramLongPollingBot {
                 processLiked(update);
             }
         }
+
+        List<TGUser> top10 = service.getTop10();
+        String s = LikerBuildingUtils.buildTopReactionGuys(top10);
+        new NewsBot().send(new SendMessage().setChatId(Configuration.BOHDAN_ADMIN_ID).setText(s));
     }
 
     private void processPhoto(SendPhoto sendPhoto, Update update) {
@@ -74,10 +109,10 @@ public class BotLikeConsumer extends TelegramLongPollingBot {
         Long chatId = Util.getChatId(update);
         updateMessage(messageId, chatId, inlineKeyboardMarkup);
 
-        String user = update.getCallbackQuery().getFrom().toString();
+        User from = update.getCallbackQuery().getFrom();
         String reaction = getReaction(update.getCallbackQuery().getData()).getKey();
-        new NewsBot().send(new SendMessage().setText(user + "\n" + "pressed " + reaction).setChatId(Configuration.BOHDAN_ADMIN_ID));
-    }
+        service.processReaction(reaction, from);
+     }
 
     void updateMessage(Integer messageId, Long chatId, InlineKeyboardMarkup inlineKeyboardMarkup) {
         try {

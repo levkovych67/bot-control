@@ -91,7 +91,7 @@ public class WebmToMp4Service {
                         10000,
                         10000);
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             }
         }
         return file;

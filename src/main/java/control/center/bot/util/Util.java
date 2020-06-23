@@ -76,8 +76,9 @@ public class Util {
                 return update.getMessage().getChatId();
             }
         } catch (NullPointerException e) {
-            throw new RuntimeException("Cant recognize chat it");
+            System.out.println("cant reconize chat");
         }
+        return null;
     }
 
     public static String getCommand(Update update) {

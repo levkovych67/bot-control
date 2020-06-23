@@ -1,9 +1,11 @@
 package control.center.bot.util;
 
+import control.center.bot.object.db.TGUser;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.methods.send.SendVideo;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -30,12 +32,7 @@ public class LikerBuildingUtils {
 
     }
 
-    public static void main(String[] args) {
-        System.out.println();
-        System.out.println(new Random().nextInt(10));
-        System.out.println(new Random().nextInt(10));
-        System.out.println(new Random().nextInt(10));
-    }
+
 
     public static Optional<SendPhoto> buildSendPhoto(Update update) {
         try {
@@ -62,6 +59,24 @@ public class LikerBuildingUtils {
             return Optional.empty();
         }
 
+    }
+
+    public static String buildTopReactionGuys(List<TGUser> list){
+        StringBuilder message = new StringBuilder("");
+        message.append("TOP 10 САМИХ АКТІВНИХ \n");
+        message.append("------------------------\n");
+        int count = 1;
+        for (TGUser e : list) {
+            message.append(count).append(") ")
+                    .append(e.getFirstName()).append(" ")
+                    .append(e.getLikes()).append("\uD83D\uDC4D ")
+                    .append(e.getDislike()).append("\uD83D\uDC4E ")
+                    .append(e.getRofl()).append("\uD83D\uDE2D ")
+                    .append(e.getDislike() + e.getLikes() + e.getRofl()).append("⚡️ \n");
+            count = count + 1;
+        }
+        message.append("------------------------\n");
+        return message.toString();
     }
 
 }
