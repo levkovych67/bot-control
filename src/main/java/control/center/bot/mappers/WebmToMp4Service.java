@@ -10,13 +10,16 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import static control.center.bot.watermark.WatermarkService.executeBashCommand;
+
+
 public class WebmToMp4Service {
 
     public static String mapToMp4(String webm) {
         try {
             validateSize(webm);
             File file = downloadFromUrl(webm);
-            return (convertWebmToMp4(file.getPath()));
+            return convertWebmToMp4(file.getPath());
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
@@ -58,26 +61,19 @@ public class WebmToMp4Service {
 
     public static void validateSize(String link) {
         Double fileSizeByLink = getFileSizeByLink(link);
-        if (fileSizeByLink > 20) {
-            throw new RuntimeException();
+        if (fileSizeByLink > 13) {
+            throw new RuntimeException("invalid size is " + fileSizeByLink);
         }
     }
 
-    public static String convertWebmToMp4(String oldPath) {
+    private static String convertWebmToMp4(String oldPath) {
         String command = String.format("ffmpeg -i %s -max_muxing_queue_size 1024 -movflags faststart -profile:v " +
                         "high -level 4.2 %s",
                 oldPath, oldPath.replace(".webm", ".mp4"));
+        executeBashCommand(command);
+        return oldPath.replace(".webm", ".mp4");
 
 
-        try {
-            Process exec = Runtime.getRuntime().exec(command);
-            exec.waitFor();
-            return oldPath.replace(".webm", ".mp4");
-
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        throw new RuntimeException("cant convert");
 
     }
 

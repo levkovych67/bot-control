@@ -29,9 +29,5 @@ public class MemoryCleaner {
         return delete;
     }
 
-    public static void main(String[] args) {
-        File file = new File("./content");
-        deleteDir(file);
-        file.mkdir();
-    }
+
 }

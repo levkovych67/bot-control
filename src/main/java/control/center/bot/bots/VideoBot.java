@@ -10,6 +10,7 @@ import control.center.bot.youtube.YouTubeUploaderService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendVideo;
 import org.telegram.telegrambots.meta.api.methods.send.SendVideoNote;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.DeleteMessage;
@@ -25,7 +26,7 @@ import java.util.Optional;
 @Component
 public class VideoBot extends TelegramLongPollingBot {
 
-    private static final String VIDEO_CRON = "1 */4 * * * *";
+    private static final String VIDEO_CRON = "0 */2 * * * *";
     private List<String> searchWords = Arrays.asList("mp4", "webm", "mp3", "шебм", "обосрался", "жпег", "засмеялся");
     private List<String> exceptions = Arrays.asList("аниме", "anime", "ониме", "black", "dark", "дарк");
 
@@ -71,10 +72,9 @@ public class VideoBot extends TelegramLongPollingBot {
             Configuration.admins.forEach(adminId -> send(
                     video.getSendVideo(),
                     adminId,
-                    Util.createLikeMenuWithUtube(video)));
+                    Util.createLikeMenu()));
                     video.deleteFiles();
-         }
-
+          }
     }
 
     private void send(SendVideo sendVideo, Long chatId, InlineKeyboardMarkup menu) {

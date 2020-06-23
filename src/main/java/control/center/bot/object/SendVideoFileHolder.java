@@ -22,6 +22,9 @@ public class SendVideoFileHolder {
 
     public static SendVideoFileHolder init(SendVideo sendVideo, String path) {
         SendVideoFileHolder sendVideoFileHolder = new SendVideoFileHolder();
+
+
+
         sendVideoFileHolder.sendVideo = sendVideo;
         sendVideoFileHolder.path = path;
         return sendVideoFileHolder;
@@ -40,6 +43,7 @@ public class SendVideoFileHolder {
             String mp4Path = sendVideo.getVideo().getNewMediaFile().getAbsolutePath();
             String webmPath = mp4Path.replace(".mp4", ".webm");
             Files.deleteIfExists(new File(webmPath).toPath());
+            Files.deleteIfExists(new File(mp4Path).toPath());
         } catch (IOException e) {
             e.printStackTrace();
         } catch (NullPointerException ex) {

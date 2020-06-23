@@ -2,14 +2,10 @@ package control.center.bot.service;
 
 import control.center.bot.holder.Holder;
 import control.center.bot.object.SendVideoFileHolder;
-import control.center.bot.util.SendVideoPreprocessor;
-import control.center.bot.util.Util;
-import org.telegram.telegrambots.meta.api.methods.send.SendVideo;
+import control.center.bot.videoprocessor.SendVideoPreprocessor;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
 public class ContentGetter {
 
@@ -25,10 +21,7 @@ public class ContentGetter {
     public SendVideoFileHolder getVideo() {
         Optional<String> video = holder.getVideo();
         return video.map(s ->
-                SendVideoFileHolder.init(
-                SendVideoPreprocessor.process(s),
-                s
-        )).orElse(null);
+                SendVideoFileHolder.init(SendVideoPreprocessor.process(s), s)).orElse(null);
 
     }
 

@@ -1,9 +1,11 @@
 package control.center.bot.bots;
 
 
+import control.center.bot.configuration.Configuration;
 import control.center.bot.util.LikerBuildingUtils;
 import control.center.bot.util.Util;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.methods.send.SendVideo;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.DeleteMessage;
@@ -14,6 +16,8 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.Optional;
+
+import static control.center.bot.util.Util.getReaction;
 
 public class BotLikeConsumer extends TelegramLongPollingBot {
 
@@ -69,6 +73,10 @@ public class BotLikeConsumer extends TelegramLongPollingBot {
         Integer messageId = Util.getMessageId(update);
         Long chatId = Util.getChatId(update);
         updateMessage(messageId, chatId, inlineKeyboardMarkup);
+
+        String user = update.getCallbackQuery().getFrom().toString();
+        String reaction = getReaction(update.getCallbackQuery().getData()).getKey();
+        new NewsBot().send(new SendMessage().setText(user + "\n" + "pressed " + reaction).setChatId(Configuration.BOHDAN_ADMIN_ID));
     }
 
     void updateMessage(Integer messageId, Long chatId, InlineKeyboardMarkup inlineKeyboardMarkup) {

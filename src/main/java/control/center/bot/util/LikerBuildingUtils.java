@@ -15,10 +15,6 @@ public class LikerBuildingUtils {
                 String contentId = Util.getContentId(update);
                 SendVideo sendVideo = new SendVideo()
                         .setChatId(update.getChannelPost().getChatId())
-                        .setParseMode("HTML")
-                        .setCaption(
-                                (new Random().nextInt(10) > 3 ? "<a href=\"https://t.me/joinchat/AAAAAETS87l2Y-yRt1iOXg\">Блискавка 2.0</a>\n" : "")
-                                + (update.getChannelPost().getCaption() == null ? "" : update.getChannelPost().getCaption()))
                         .setVideo(contentId)
                         .setReplyMarkup(Util.createThunderLikeMenu(
                                 0, 0, 0, 0

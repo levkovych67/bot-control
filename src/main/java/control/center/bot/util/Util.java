@@ -135,10 +135,7 @@ public class Util {
                                 Util.createInlineButtonText("/DARK", Configuration.DARK_ID.toString())),
                         Arrays.asList(
                                 Util.createInlineButtonText("/fap", Configuration.FAP_ID.toString()),
-                                Util.createInlineButtonText("/music", Configuration.MUS_ID.toString())),
-                        Arrays.asList(
-                                Util.createInlineButtonText("utube", Util.getFileLocation(videoFileHolder))
-                        )
+                                Util.createInlineButtonText("/music", Configuration.MUS_ID.toString()))
                 ));
     }
 
@@ -256,6 +253,8 @@ public class Util {
                     return react;
                 })
                 .collect(Collectors.toMap(Pair::getLeft, Pair::getRight));
+
+
 
         Integer shits = collect.get("shit");
         Integer likes = collect.get("like");

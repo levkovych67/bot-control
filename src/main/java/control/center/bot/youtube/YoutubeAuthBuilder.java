@@ -34,8 +34,8 @@ public class YoutubeAuthBuilder {
         final NetHttpTransport httpTransport;
         try {
             httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-            Credential credential = authorize(httpTransport);
-            return new YouTube.Builder(httpTransport, JSON_FACTORY, credential)
+//            Credential credential = authorize(httpTransport);
+            return new YouTube.Builder(httpTransport, JSON_FACTORY, null)
                     .setApplicationName(APPLICATION_NAME)
                     .build();
         } catch (GeneralSecurityException | IOException e) {
