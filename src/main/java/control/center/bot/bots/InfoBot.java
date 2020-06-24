@@ -11,29 +11,32 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 @Component
 public class InfoBot extends TelegramLongPollingBot {
 
-    private static String messageAboutDeganChannel() {
+    private static String bliskavka2() {
         return "Самий топовий канал в галактике - Блискавка 2.0: " + Configuration.deganchanchannellink;
     }
 
-    private static String messageAboutFapChannel() {
+    private static String fap() {
         return "FAP ФАП AFG THREAD " + Configuration.fap;
     }
 
-    private static String messageAboutBlackChannel() {
+    private static String black() {
         return "DARK WEBM THREAD: " + Configuration.black;
     }
-
-    private static String quziBot() {
-        return "Quiz bot бот з впросами на английском " + Configuration.quizBot;
+    private static String music() {
+        return "MUSIC THREAD: " + Configuration.music;
     }
 
-    private static String chatBot() {
-        return "Анонимный чат бот " + Configuration.chatBot;
-    }
+//    private static String quziBot() {
+//        return "Quiz bot бот з впросами на английском " + Configuration.quizBot;
+//    }
 
-    private static String messageAboutTele2ch() {
-        return "Tele2ch BETA двач в телеграме, разберешся - " + Configuration.tele2ch;
-    }
+//    private static String chatBot() {
+//        return "Анонимный чат бот " + Configuration.chatBot;
+//    }
+
+//    private static String messageAboutTele2ch() {
+//        return "Tele2ch BETA двач в телеграме, разберешся - " + Configuration.tele2ch;
+//    }
 
     private static String other() {
         return "Разработка всех праектов ведется на рандоме поетому пиши сюда что тебе нравиться, шо не нравиться и шо сапортити бо я заебався ";
@@ -45,13 +48,14 @@ public class InfoBot extends TelegramLongPollingBot {
         if ("/info".equals(text) || "/start".equals(text)) {
             System.out.println("Якийта хуй : " + text);
             sendMessage("Здаров маладой", chatId);
-            sendMessage(messageAboutDeganChannel(), chatId);
-            sendMessage(messageAboutBlackChannel(), chatId);
-            sendMessage(messageAboutTele2ch(), chatId);
-            sendMessage(messageAboutFapChannel(), chatId);
-            sendMessage(quziBot(), chatId);
-            sendMessage(chatBot(), chatId);
-            sendMessage(onime(), chatId);
+            sendMessage(bliskavka2(), chatId);
+            sendMessage(music(), chatId);
+            sendMessage(black(), chatId);
+//            sendMessage(messageAboutTele2ch(), chatId);
+            sendMessage(fap(), chatId);
+//            sendMessage(quziBot(), chatId);
+//            sendMessage(chatBot(), chatId);
+//            sendMessage(onime(), chatId);
             sendMessage(other(), chatId);
 
             sendMessage("ПИШИ СЮДА", chatId);
@@ -69,9 +73,9 @@ public class InfoBot extends TelegramLongPollingBot {
         }
     }
 
-    private String onime() {
-        return "Канал Аниме для реальнux getero: https://t.me/sho_pacani_onime";
-    }
+//    private String onime() {
+//        return "Канал Аниме для реальнux getero: https://t.me/sho_pacani_onime";
+//    }
 
     private void sendStickerToOdmen(Update update) {
         try {

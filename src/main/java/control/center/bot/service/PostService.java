@@ -29,6 +29,20 @@ public class PostService {
             return new HashSet<>();
         }
     }
+    public static Set<Post> getAllPostsFromThreadByLink(String threadUrl) {
+        final String url = threadUrl.replace(".html",".json");
+        try {
+            return new HashSet<>(
+                    new RestTemplate().getForEntity(url, Thread.class)
+                            .getBody()
+                            .getMetaThreads()
+                            .get(0)
+                            .getPosts());
+        } catch (Exception e) {
+            System.out.println("Не зміг стянути пости з треда " + url + " " + e.getMessage());
+            return new HashSet<>();
+        }
+    }
 
     public static Set<String> getVideosFromPosts(Set<Post> posts) {
         return posts.stream().flatMap(e -> e.getFiles().stream()).map(Files::getLink).filter(Util::isVideo).collect(Collectors.toSet());

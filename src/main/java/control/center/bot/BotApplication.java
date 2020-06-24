@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 
 @Configuration
 @EnableScheduling
@@ -31,6 +30,7 @@ public class BotApplication {
         final VideoBot videoBot = new VideoBot();
         final MusicBot musicBot = new MusicBot();
         final QuizBot quizBot = new QuizBot();
+        final AllThreadBot threadBot = new AllThreadBot();
         //final BotLikeConsumer botLikeConsumer = new BotLikeConsumer();
 
 
@@ -44,6 +44,7 @@ public class BotApplication {
             botsApi.registerBot(infoBot);
             botsApi.registerBot(animeBot);
             botsApi.registerBot(quizBot);
+            botsApi.registerBot(threadBot);
             //botsApi.registerBot(botLikeConsumer);
         } catch (Exception ignored) {
 

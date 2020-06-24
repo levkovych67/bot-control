@@ -47,7 +47,7 @@ public class NewsBot extends TelegramLongPollingBot {
             final String command = Util.getCommand(update);
 
             if ("/start".equals(command) && chatId.equals(Configuration.BOHDAN_ADMIN_ID)) {
-                final Set<NewsThread> threadsForMenu = NewsService.getThreadsForMenu(25);
+                final Set<NewsThread> threadsForMenu = NewsService.getThreadsForMenu(50);
                 threadsForMenu.forEach(e -> send(e, chatId));
             } else {
                 if (NewsUtil.isPhotoCallback(update)) {

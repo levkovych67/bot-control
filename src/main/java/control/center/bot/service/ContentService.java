@@ -21,6 +21,7 @@ public interface ContentService {
     public static void main(String[] args) {
         final Set<String> videos = getVideos(Arrays.asList("fap", "фап", "porn", "sex", "прон"), new ArrayList<>());
 
+
     }
 
     static Set<String> getPics(List<String> searchWords, List<String> exceptionalWords) {

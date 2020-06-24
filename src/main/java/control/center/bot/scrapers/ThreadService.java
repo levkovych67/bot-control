@@ -2,15 +2,19 @@ package control.center.bot.scrapers;
 
 
 import control.center.bot.object.Board;
+import control.center.bot.object.NewsThread;
 import control.center.bot.object.ThreadHead;
+import control.center.bot.util.TYPE;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.client.RestTemplate;
+import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
+import org.telegram.telegrambots.meta.api.methods.send.SendVideo;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import static control.center.bot.util.Util.*;
 
 public class ThreadService {
 
@@ -27,6 +31,11 @@ public class ThreadService {
             System.out.println("Не зміг потянути треди " + e.getMessage());
             return new HashSet<>();
         }
+    }
+
+    public static void main(String[] args) {
+        Set<ThreadHead> all = getOpPostsFromB();
+        System.out.println(all);
     }
 
     public static Set<ThreadHead> getNews(Integer limit) {
@@ -62,4 +71,6 @@ public class ThreadService {
     }
 
 
-}
+
+
+    }

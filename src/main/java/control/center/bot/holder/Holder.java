@@ -26,7 +26,6 @@ public class Holder {
 
 
     private void refreshVideos() {
-
         this.videos.addAll(ContentService.getVideos(searchWords, exceptionalWords));
         this.totalVideos = this.videos.size();
     }

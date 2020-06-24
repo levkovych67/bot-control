@@ -15,6 +15,7 @@ public class Configuration {
     public static String TWO_CH_URL = "https://2ch.hk";
     public static String deganchanchannellink = "https://t.me/joinchat/AAAAAETS87l2Y-yRt1iOXg";
     public static String black = "https://t.me/joinchat/AAAAAFhwdFepcqdUz7MGMQ";
+    public static String music = "https://t.me/music_tthread";
     public static String fap = "https://t.me/joinchat/AAAAAFhgWF9_PWHjesV-dQ";
     public static String tele2ch = "@DvachRandomVidosikEptaBot";
     public static String quizBot = "@QuizCacaoBot";
