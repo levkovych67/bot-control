@@ -19,9 +19,6 @@ public class BotApplication {
         YouTubeAuthHolder.initClient();
         ApiContextInitializer.init();
         TelegramBotsApi botsApi = new TelegramBotsApi();
-
-        final AnimeBot animeBot = new AnimeBot();
-
         final DarkBot darkBot = new DarkBot();
         final PicBot picBot = new PicBot();
         final NewsBot newsBot = new NewsBot();
@@ -42,7 +39,6 @@ public class BotApplication {
             botsApi.registerBot(fapBot);
             botsApi.registerBot(videoBot);
             botsApi.registerBot(infoBot);
-            botsApi.registerBot(animeBot);
             botsApi.registerBot(quizBot);
             botsApi.registerBot(threadBot);
             //botsApi.registerBot(botLikeConsumer);

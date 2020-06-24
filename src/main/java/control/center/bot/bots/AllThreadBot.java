@@ -30,7 +30,7 @@ public class AllThreadBot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         System.out.println(update);
         try {
-            if(update.getMessage().getText().equals("/list")){
+            if(update.getMessage().getText().equals("/start")){
                 sendThreadMenu(update);
             }
         } catch (Exception e){
