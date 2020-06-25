@@ -26,7 +26,7 @@ import java.util.Optional;
 @Component
 public class VideoBot extends TelegramLongPollingBot {
 
-    private static final String VIDEO_CRON = "*/30 * * * * *";
+    private static final String VIDEO_CRON = "* * * * * *";
     private List<String> searchWords = Arrays.asList("mp4", "webm", "mp3", "шебм", "обосрался", "жпег", "засмеялся");
     private List<String> exceptions = Arrays.asList("аниме", "anime", "ониме", "black", "dark", "дарк");
 

@@ -10,7 +10,7 @@ public class WatermarkService {
     private  static String command = "ffmpeg -i \"%s\" -vf \"drawtext=text='%s':x=if(eq(mod(t\\,30)\\,0)\\,rand(0\\,(w-text_w))\\,x):y=if(eq(mod(t\\,30)\\,0)\\,rand(0\\,(h-text_h))\\,y):fontfile=/pathto/font.ttf:fontsize=20:fontcolor=white:shadowcolor=black:shadowx=2:shadowy=2\" \"%s\"";
 
     public static String addWaterMark(String oldPath) {
-        System.out.println("ADDING WATERMARK");
+        System.out.println("Addin watermark to " + oldPath);
         String newPath = oldPath.replace(".mp4", "_w.mp4");
         String preparedCommand = String.format(command, oldPath, bliskavkaLink, newPath );
         executeBashCommand(preparedCommand);

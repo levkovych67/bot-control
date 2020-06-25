@@ -41,9 +41,11 @@ public class SendVideoFileHolder {
     public void deleteFiles() {
         try {
             String mp4Path = sendVideo.getVideo().getNewMediaFile().getAbsolutePath();
-            String webmPath = mp4Path.replace(".mp4", ".webm");
-            Files.deleteIfExists(new File(webmPath).toPath());
             Files.deleteIfExists(new File(mp4Path).toPath());
+            String mp4 = mp4Path.replace("_w.mp4", ".mp4");
+            String webm = mp4.replace(".mp4", ".webm");
+            Files.deleteIfExists(new File(mp4).toPath());
+            Files.deleteIfExists(new File(webm).toPath());
         } catch (IOException e) {
             e.printStackTrace();
         } catch (NullPointerException ex) {

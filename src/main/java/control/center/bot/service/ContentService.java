@@ -26,7 +26,10 @@ public interface ContentService {
 
     static Set<String> getPics(List<String> searchWords, List<String> exceptionalWords) {
         Set<Post> posts = getPosts(searchWords, exceptionalWords);
-        return getPicsFromPosts(posts);
+
+        Set<String> picsFromPosts = getPicsFromPosts(posts);
+        System.out.println(picsFromPosts.size() + " pics " );
+        return picsFromPosts;
     }
 
     static Set<Post> getPosts(List<String> searchWords, List<String> exceptionalWords) {

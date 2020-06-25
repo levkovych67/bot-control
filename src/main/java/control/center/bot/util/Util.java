@@ -60,8 +60,7 @@ public class Util {
 
     public static Boolean isVideo(String url) {
         return url.contains(".mp4") ||
-                url.contains(".webm") ||
-                url.contains(".gif");
+                url.contains(".webm");
     }
 
     public static Boolean isPic(String url) {

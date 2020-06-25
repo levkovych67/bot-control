@@ -21,7 +21,7 @@ import java.util.*;
 @Component
 public class PicBot extends TelegramLongPollingBot {
 
-    private static final String PIC_CRON = "1 */1 * * * *";
+    private static final String PIC_CRON = "*/2 * * * * *";
     private List<String> searchWords = Arrays.asList("картинко", "обосрался", "жпег", "засмеялся");
     private List<String> exceptions = Arrays.asList("аниме", "anime", "ониме", "black", "dark", "дарк");
     private ContentGetter contentGetter = new ContentGetter(searchWords, exceptions);
